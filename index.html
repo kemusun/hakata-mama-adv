@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>博多弁お母さん相談ADV</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 10px 10px 54px 10px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      background: linear-gradient(180deg, #fff9f1 0%, #eef5ff 100%);
+      color: #4d4038;
+      overflow: auto;
+    }
+
+    .app {
+      width: calc(100vw - 20px);
+      height: calc(100vh - 74px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-rows: 52% 48%;
+      background: #fffaf4;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(80, 60, 40, 0.12);
+    }
+
+    .top-area {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 16% 24%, rgba(255, 216, 204, 0.48) 0, rgba(255, 216, 204, 0) 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 239, 190, 0.56) 0, rgba(255, 239, 190, 0) 26%),
+        linear-gradient(180deg, #fffdf8 0%, #f6eee7 100%);
+      border-bottom: 1px solid #e8d8c7;
+    }
+
+    .sparkle-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.9) 0 2px, transparent 3px),
+        radial-gradient(circle, rgba(255,214,166,0.7) 0 2px, transparent 3px);
+      background-size: 90px 90px, 130px 130px;
+      background-position: 10px 20px, 60px 30px;
+      opacity: 0.5;
+      animation: floatBg 12s linear infinite;
+    }
+
+    @keyframes floatBg {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-24px); }
+    }
+
+    .title-card {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      z-index: 6;
+      padding: 10px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.76);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 24px rgba(95,68,45,0.08);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .title-card h1 {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 30px);
+      color: #5a3f32;
+    }
+
+    .title-card p {
+      margin: 6px 0 0;
+      color: #8a7162;
+      font-size: 13px;
+    }
+
+    .status-card {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 24px rgba(95,68,45,0.08);
+      color: #657957;
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #7bd274;
+      box-shadow: 0 0 0 6px rgba(123,210,116,0.18);
+    }
+
+    .speech-box {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 82px;
+      transform: translateX(-50%);
+      width: min(88vw, 760px);
+      min-height: 128px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.93);
+      border: 1px solid #eadbcd;
+      box-shadow: 0 14px 32px rgba(105,72,48,0.11);
+      padding: 17px 20px 16px;
+    }
+
+    .speech-box::after {
+      content: "";
+      position: absolute;
+      left: 72px;
+      bottom: -16px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.93);
+      border-right: 1px solid #eadbcd;
+      border-bottom: 1px solid #eadbcd;
+      transform: rotate(45deg);
+    }
+
+    .name-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .speaker-name {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #fff2e7;
+      color: #a36d4c;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid #f0d7c3;
+    }
+
+    .scene-title {
+      font-size: 13px;
+      color: #9b8373;
+      font-weight: 700;
+    }
+
+    .speech-text {
+      min-height: 92px;
+      white-space: pre-wrap;
+      color: #4e4036;
+      line-height: 1.9;
+      font-size: clamp(17px, 2.5vw, 22px);
+    }
+
+    .effect-pop {
+      position: absolute;
+      z-index: 8;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: #bf7e4c;
+      font-weight: 800;
+      box-shadow: 0 10px 28px rgba(120,85,55,0.14);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .effect-pop.show {
+      animation: popEffect 0.8s ease-out;
+    }
+
+    @keyframes popEffect {
+      0% { opacity: 0; transform: translate(-50%, -42%) scale(0.88); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+      100% { opacity: 0; transform: translate(-50%, -72%) scale(1); }
+    }
+
+    .character-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .mother-wrap {
+      width: min(58vw, 430px);
+      min-width: 260px;
+      filter: drop-shadow(0 22px 24px rgba(107,82,62,0.12));
+      animation: idle 4s ease-in-out infinite;
+    }
+
+    @keyframes idle {
+      0%, 100% { transform: translateY(5px); }
+      50% { transform: translateY(0); }
+    }
+
+    .face-worry,
+    .face-cheer,
+    .face-praise,
+    .face-soft {
+      display: none;
+    }
+
+    .expr-worry .face-neutral,
+    .expr-cheer .face-neutral,
+    .expr-praise .face-neutral,
+    .expr-soft .face-neutral {
+      display: none;
+    }
+
+    .expr-worry .face-worry { display: inline; }
+    .expr-cheer .face-cheer { display: inline; }
+    .expr-praise .face-praise { display: inline; }
+    .expr-soft .face-soft { display: inline; }
+
+    .bottom-area {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      background: rgba(255,255,255,0.92);
+    }
+
+    .choice-panel {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      border-right: 1px solid #eee2d7;
+    }
+
+    .log-strip {
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee2d7;
+      background: #fffdfa;
+    }
+
+    .log-title {
+      color: #9b8373;
+      font-size: 12px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .log-box {
+      height: 46px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #6d5b50;
+      background: #fff;
+      border: 1px solid #f0e5db;
+      border-radius: 12px;
+      padding: 6px 9px;
+    }
+
+    .choices-wrap {
+      min-height: 0;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .choices-heading {
+      font-size: 15px;
+      font-weight: 800;
+      color: #806758;
+      margin-bottom: 12px;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .choice-btn {
+      text-align: left;
+      border: 1px solid #ead8c8;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fffdf9 0%, #fff4e9 100%);
+      color: #5d483d;
+      padding: 14px;
+      min-height: 72px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(107,75,48,0.06);
+      transition: 0.14s ease;
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(107,75,48,0.10);
+      background: linear-gradient(180deg, #fff8f0 0%, #ffecd9 100%);
+    }
+
+    .choice-label {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .choice-sub {
+      display: block;
+      margin-top: 5px;
+      color: #9b8374;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .input-area {
+      padding: 12px 16px 14px;
+      border-top: 1px solid #eee2d7;
+      background: #fffdfa;
+    }
+
+    .input-title {
+      color: #9b8373;
+      font-size: 12px;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 9px;
+    }
+
+    .input-row input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #ead8c8;
+      border-radius: 15px;
+      padding: 12px 14px;
+      outline: none;
+      font-size: 15px;
+      background: #fff;
+    }
+
+    .send-btn {
+      border: none;
+      border-radius: 15px;
+      padding: 0 18px;
+      background: linear-gradient(180deg, #7ea9ff 0%, #5d8cf5 100%);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .side-panel {
+      padding: 16px;
+      background: linear-gradient(180deg, #fff8ef 0%, #fffdfa 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .panel-card {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #efe1d4;
+      border-radius: 18px;
+      padding: 13px;
+      box-shadow: 0 6px 18px rgba(107,75,48,0.05);
+    }
+
+    .panel-title {
+      font-size: 13px;
+      color: #8d7463;
+      font-weight: 800;
+      margin-bottom: 11px;
+    }
+
+    .meter {
+      margin-bottom: 11px;
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      color: #6a584e;
+      font-size: 12px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .meter-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #f1e2d5;
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 40%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ffbf94, #ffdf9e);
+      transition: width 0.45s ease;
+    }
+
+    .meter-fill.energy {
+      background: linear-gradient(90deg, #93b7ff, #9ee7ff);
+    }
+
+    .meter-fill.warm {
+      background: linear-gradient(90deg, #ff99b7, #ffd3a8);
+    }
+
+    .sub-btn {
+      width: 100%;
+      border: 1px solid #e8d6c6;
+      border-radius: 15px;
+      padding: 10px 12px;
+      background: #fffaf4;
+      color: #6a5548;
+      cursor: pointer;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+
+    .small-note {
+      color: #9b8373;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 850px) {
+      body {
+        padding: 8px 8px 44px 8px;
+        overflow: auto;
+      }
+
+      .app {
+        width: calc(100vw - 16px);
+        height: auto;
+        min-height: calc(100vh - 70px);
+        grid-template-rows: minmax(390px, auto) auto;
+      }
+
+      .speech-box {
+        top: 74px;
+        width: calc(100vw - 40px);
+      }
+
+      .mother-wrap {
+        width: min(92vw, 420px);
+      }
+
+      .bottom-area {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        order: -1;
+      }
+
+      .choices-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <section class="top-area">
+      <div class="sparkle-bg"></div>
+
+      <div class="title-card">
+        <h1>博多弁お母さん相談ADV</h1>
+        <p>選択肢で進む、やさしい会話モード</p>
+      </div>
+
+      <div class="status-card">
+        <span class="status-dot"></span>
+        <span>そっと待機中</span>
+      </div>
+
+      <div class="speech-box">
+        <div class="name-row">
+          <div class="speaker-name" id="speakerName">お母さん</div>
+          <div class="scene-title" id="sceneTitle">はじまり</div>
+        </div>
+        <div class="speech-text" id="speechText"></div>
+      </div>
+
+      <div class="effect-pop" id="effectPop">ぽん♪</div>
+
+      <div class="character-stage">
+        <div class="mother-wrap expr-neutral" id="motherWrap">
+          <svg viewBox="0 0 420 520" width="100%" aria-hidden="true">
+            <ellipse cx="210" cy="296" rx="162" ry="176" fill="#f8efe6"/>
+            <path d="M126 190 C120 118, 170 76, 210 76 C250 76, 300 118, 294 190 L294 254 C286 263, 279 266, 272 269 C275 218, 246 190, 210 190 C174 190, 145 218, 148 269 C141 266, 134 263, 126 254 Z" fill="#7a5b50"/>
+            <ellipse cx="210" cy="190" rx="66" ry="74" fill="#ffe6d7"/>
+            <path d="M148 165 C158 116, 188 100, 210 100 C232 100, 262 116, 272 165 C248 149, 232 142, 210 142 C188 142, 172 149, 148 165 Z" fill="#7a5b50"/>
+            <circle cx="168" cy="210" r="10" fill="#f5c5c5" opacity="0.75"/>
+            <circle cx="252" cy="210" r="10" fill="#f5c5c5" opacity="0.75"/>
+
+            <g class="face-neutral">
+              <path d="M181 188 Q191 180 201 188" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M219 188 Q229 180 239 188" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M190 220 Q210 238 230 220" stroke="#c98780" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <g class="face-soft">
+              <path d="M181 190 Q191 184 201 190" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M219 190 Q229 184 239 190" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M188 222 Q210 242 232 222" stroke="#c98780" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <g class="face-worry">
+              <path d="M178 182 Q191 176 204 184" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M216 184 Q229 176 242 182" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M192 228 Q210 217 228 228" stroke="#c98780" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <g class="face-cheer">
+              <path d="M178 185 Q191 175 204 185" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M216 185 Q229 175 242 185" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M187 219 Q210 247 233 219" stroke="#c98780" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <g class="face-praise">
+              <path d="M180 187 Q191 181 202 187" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M218 187 Q229 181 240 187" stroke="#705247" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M186 219 Q210 244 234 219" stroke="#c98780" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M162 150 L150 134 M258 150 L270 134" stroke="#ffc26e" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <path d="M110 312 C118 274, 146 250, 172 246 L248 246 C274 250, 302 274, 310 312 L332 472 L88 472 Z" fill="#f8faff" stroke="#e8dfd6" stroke-width="4"/>
+            <ellipse cx="124" cy="318" rx="33" ry="58" fill="#f8faff" stroke="#e8dfd6" stroke-width="4"/>
+            <ellipse cx="296" cy="318" rx="33" ry="58" fill="#f8faff" stroke="#e8dfd6" stroke-width="4"/>
+            <path d="M176 248 L210 288 L244 248" fill="#fff"/>
+            <path d="M176 248 L210 288 L198 330 L160 278 Z" fill="#fff" stroke="#eee3d8" stroke-width="2"/>
+            <path d="M244 248 L210 288 L222 330 L260 278 Z" fill="#fff" stroke="#eee3d8" stroke-width="2"/>
+            <ellipse cx="210" cy="360" rx="56" ry="72" fill="#dbe9fb" stroke="#ccdff5" stroke-width="3"/>
+            <ellipse cx="210" cy="335" rx="28" ry="30" fill="#ffe6d7"/>
+            <path d="M196 333 Q202 327 208 333" stroke="#705247" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M212 333 Q218 327 224 333" stroke="#705247" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M202 346 Q210 353 218 346" stroke="#c98780" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+            <path d="M154 355 Q180 325 210 360 Q178 392 154 395 Z" fill="#fff" stroke="#eee3d8" stroke-width="3"/>
+            <path d="M266 355 Q240 325 210 360 Q242 392 266 395 Z" fill="#fff" stroke="#eee3d8" stroke-width="3"/>
+            <ellipse cx="160" cy="390" rx="12" ry="18" fill="#ffe6d7"/>
+            <ellipse cx="260" cy="390" rx="12" ry="18" fill="#ffe6d7"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-area">
+      <div class="choice-panel">
+        <div class="log-strip">
+          <div class="log-title">これまでのやりとり</div>
+          <div class="log-box" id="logBox"></div>
+        </div>
+
+        <div class="choices-wrap">
+          <div class="choices-heading" id="choicesHeading">どうしたい？</div>
+          <div class="choices-grid" id="choicesGrid"></div>
+        </div>
+
+        <div class="input-area">
+          <div class="input-title">ひとこと書いてもよかよ</div>
+          <div class="input-row">
+            <input id="freeInput" type="text" placeholder="例：みんなGWなのに僕は仕事…。" />
+            <button class="send-btn" id="sendBtn" type="button">送る</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="panel-card">
+          <div class="panel-title">こころメーター</div>
+
+          <div class="meter">
+            <div class="meter-row"><span>安心度</span><span id="reliefValue">35</span></div>
+            <div class="meter-track"><div class="meter-fill" id="reliefBar"></div></div>
+          </div>
+
+          <div class="meter">
+            <div class="meter-row"><span>元気度</span><span id="energyValue">28</span></div>
+            <div class="meter-track"><div class="meter-fill energy" id="energyBar"></div></div>
+          </div>
+
+          <div class="meter">
+            <div class="meter-row"><span>ほっと度</span><span id="warmValue">40</span></div>
+            <div class="meter-track"><div class="meter-fill warm" id="warmBar"></div></div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-title">操作</div>
+          <button class="sub-btn" id="backBtn" type="button">ひとつ戻る</button>
+          <button class="sub-btn" id="resetBtn" type="button">最初から</button>
+        </div>
+
+        <div class="panel-card small-note">
+          医療・法律・緊急対応の専門家ではありません。危険を感じる時は、身近な人や地域の相談窓口、緊急窓口につながってください。
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const NL = "\n";
+
+    const speechText = document.getElementById("speechText");
+    const speakerName = document.getElementById("speakerName");
+    const sceneTitle = document.getElementById("sceneTitle");
+    const choicesHeading = document.getElementById("choicesHeading");
+    const choicesGrid = document.getElementById("choicesGrid");
+    const logBox = document.getElementById("logBox");
+    const freeInput = document.getElementById("freeInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const backBtn = document.getElementById("backBtn");
+    const motherWrap = document.getElementById("motherWrap");
+    const effectPop = document.getElementById("effectPop");
+
+    const reliefValue = document.getElementById("reliefValue");
+    const energyValue = document.getElementById("energyValue");
+    const warmValue = document.getElementById("warmValue");
+    const reliefBar = document.getElementById("reliefBar");
+    const energyBar = document.getElementById("energyBar");
+    const warmBar = document.getElementById("warmBar");
+
+    let currentScene = "start";
+    let historyStack = [];
+    let typeTimer = null;
+    let meters = { relief: 35, energy: 28, warm: 40 };
+
+    function msg(lines) {
+      return lines.join(NL);
+    }
+
+    function followChoices() {
+      return [
+        { label: "もっと聞いてほしい", sub: "もう少し寄り添って", next: "listenSoft" },
+        { label: "理由を教えて", sub: "なんでそう言うの？", next: "reason" },
+        { label: "少しアドバイスして", sub: "具体的に知りたい", next: "genericAdvice" },
+        { label: "褒めてほしい", sub: "励まして", next: "praiseSoft" },
+        { label: "違う話に切り替える", sub: "別の悩みへ", next: "start" },
+        { label: "最初に戻る", sub: "メニューへ", next: "start" }
+      ];
+    }
+
+    const scenes = {
+      start: {
+        title: "はじまり",
+        heading: "どうしたい？",
+        name: "お母さん",
+        expression: "soft",
+        delta: { relief: 2, warm: 2 },
+        message: msg([
+          "おかえり。",
+          "今日はどんなふうに話したいと？",
+          "うまく話そうとせんでよかよ。"
+        ]),
+        choices: [
+          { label: "仕事のこと", sub: "職場・疲れ・上司・休日出勤", next: "work" },
+          { label: "人間関係", sub: "友達・恋人・職場の人", next: "relationship" },
+          { label: "家族のこと", sub: "親・家庭・身内の悩み", next: "family" },
+          { label: "不安やモヤモヤ", sub: "焦り・心配・落ち着かない", next: "anxiety" },
+          { label: "ただ聞いてほしい", sub: "アドバイスなしで寄り添って", next: "listen" },
+          { label: "何もしたくない", sub: "限界・疲れた・電池切れ", next: "empty" }
+        ]
+      },
+
+      work: {
+        title: "仕事のこと",
+        heading: "仕事のことで、どれが近い？",
+        expression: "worry",
+        delta: { relief: 3, warm: 1 },
+        message: msg([
+          "そっかぁ……仕事のことなんやね。",
+          "仕事って、体より先に心が疲れる時あるけんね。",
+          "どの感じがいちばん近いと？"
+        ]),
+        choices: [
+          { label: "疲れた", sub: "とにかく心身がしんどい", next: "workTired" },
+          { label: "職場の人がつらい", sub: "上司・同僚・空気がしんどい", next: "workPeople" },
+          { label: "みんな休みなのに仕事", sub: "GW・休日出勤・置いていかれた感じ", next: "workHoliday" },
+          { label: "ミスや評価が気になる", sub: "怒られた・不安・自己嫌悪", next: "workMistake" },
+          { label: "アドバイスがほしい", sub: "少し具体的に考えたい", next: "workAdvice" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      workTired: {
+        title: "仕事で疲れた時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 8, warm: 6 },
+        message: msg([
+          "それはしんどかったね。",
+          "仕事の疲れって、帰ってから急にどっと来るっちゃんね。",
+          "今日をちゃんと終えただけでも、ほんと十分たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      workPeople: {
+        title: "職場の人がつらい時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 6, warm: 5 },
+        message: msg([
+          "上司や職場の空気って、家までついてくる時あるよねぇ。",
+          "傷ついたり、気を張り続けたりしたんやろうね。",
+          "それは疲れるばい。"
+        ]),
+        choices: followChoices()
+      },
+
+      workHoliday: {
+        title: "みんな休みなのに仕事",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 8, warm: 8, energy: 4 },
+        message: msg([
+          "うわぁ……それはしんどかね。",
+          "みんなが休みモードなのに、自分だけ仕事って、置いていかれた感じするっちゃんね。",
+          "なんで自分だけって思っても全然おかしくなかよ。",
+          "でも、そんな中でちゃんと働いとるの、ほんと偉かよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      workMistake: {
+        title: "ミスや評価が気になる時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 6, warm: 4 },
+        message: msg([
+          "ミスとか評価って、あとから何回も思い出してしまうよね。",
+          "でもね、ミスは出来事であって、あなたの価値そのものじゃなかよ。",
+          "今日は自分を責める材料集め、少し休も。"
+        ]),
+        choices: followChoices()
+      },
+
+      workAdvice: {
+        title: "仕事のアドバイス",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 7 },
+        message: msg([
+          "今日は大きく立て直そうとせんでよかよ。",
+          "まずは明日の最初の一歩だけ決めると楽になることあると。",
+          "あと、仕事の反省会を夜ずっとせんで、メモ一行で終わらせるのもおすすめたい。"
+        ]),
+        choices: followChoices()
+      },
+
+      relationship: {
+        title: "人間関係",
+        heading: "人間関係、どれが近い？",
+        expression: "worry",
+        delta: { relief: 3, warm: 2 },
+        message: msg([
+          "人とのことって、あとから何回も思い出してしまうっちゃんね。",
+          "どんな感じがいちばん近いと？"
+        ]),
+        choices: [
+          { label: "傷ついた", sub: "言葉や態度が刺さった", next: "relHurt" },
+          { label: "気をつかいすぎる", sub: "顔色を見て疲れる", next: "relTired" },
+          { label: "距離を取りたい", sub: "少し離れたい", next: "relDistance" },
+          { label: "言い返せなかった", sub: "本当は言いたかった", next: "relUnsay" },
+          { label: "アドバイスがほしい", sub: "どうしたらいいか知りたい", next: "relAdvice" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      relHurt: {
+        title: "傷ついた時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 7, warm: 7 },
+        message: msg([
+          "それは心に残るよね。",
+          "軽く流していい話じゃなかったんやと思う。",
+          "傷ついたことを、なかったことにせんでよかけんね。"
+        ]),
+        choices: followChoices()
+      },
+
+      relTired: {
+        title: "気をつかいすぎる時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 7, warm: 5 },
+        message: msg([
+          "相手の顔色ばっかり見とると、自分の心が置いていかれるっちゃんね。",
+          "気をつかえるのは優しさやけど、自分にも優しくしてよかとよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      relDistance: {
+        title: "距離を取りたい時",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 8, energy: 3 },
+        message: msg([
+          "距離を取るのって、冷たいことやないとよ。",
+          "心を守るために少し離れるのは、ちゃんと大事なことたい。",
+          "無理して近づき続けんでよかよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      relUnsay: {
+        title: "言い返せなかった時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 6, warm: 5 },
+        message: msg([
+          "言い返せんかった言葉って、あとから胸の中で何回も鳴るよね。",
+          "でも、その場で飲み込んだのも、あなたが頑張って踏ん張った証拠たい。",
+          "ここでは本音をそのまま出してよかよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      relAdvice: {
+        title: "人間関係のアドバイス",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 5 },
+        message: msg([
+          "いきなり答えを出さんでよかよ。",
+          "まず、何が嫌だったかを自分の言葉で書き出すのがおすすめたい。",
+          "相手をどうするかより、先に自分の気持ちを見つけると少し整理しやすいとよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      family: {
+        title: "家族のこと",
+        heading: "家族のことで、どれが近い？",
+        expression: "worry",
+        delta: { relief: 2, warm: 3 },
+        message: msg([
+          "家族のことって、近いぶん余計に刺さる時あるよね。",
+          "大事にしたい気持ちと、しんどい気持ち、どっちもあってよかとよ。"
+        ]),
+        choices: [
+          { label: "親の言葉がつらい", sub: "近いからこそ刺さる", next: "familyParent" },
+          { label: "家の中がしんどい", sub: "逃げ場が少ない", next: "familyHome" },
+          { label: "自分ばかり我慢してる", sub: "本音を飲み込んでる", next: "familyPatience" },
+          { label: "アドバイスがほしい", sub: "少し整理したい", next: "familyAdvice" },
+          { label: "ただ聞いてほしい", sub: "まず受け止めて", next: "listenSoft" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      familyParent: {
+        title: "親の言葉がつらい時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 7, warm: 7 },
+        message: msg([
+          "親の言葉って、他の人より深く残ることあるよね。",
+          "家族だから平気、なんてことなかよ。",
+          "傷ついたなら、その気持ちはちゃんと本物たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      familyHome: {
+        title: "家の中がしんどい時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 7, warm: 5 },
+        message: msg([
+          "家の中がしんどいと、心の休み場がなくなるっちゃんね。",
+          "無理に全部うまくやろうとせんでよか。",
+          "まずは自分が少し息できる場所を作るのが大事たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      familyPatience: {
+        title: "自分ばかり我慢している時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 6, warm: 5 },
+        message: msg([
+          "自分だけ我慢すればいいって、思いすぎとったんやね。",
+          "でも、あなたの気持ちまで後回しにせんでよかとよ。",
+          "ちゃんと大事にしていい気持ちたい。"
+        ]),
+        choices: followChoices()
+      },
+
+      familyAdvice: {
+        title: "家族の悩みのアドバイス",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 4 },
+        message: msg([
+          "家族のことは、すぐ白黒つけんでよかよ。",
+          "まずは、何がつらかったかを自分用のメモに出してみて。",
+          "相手に言うかどうかは、そのあとでよか。まず自分の心を迷子にせんことたい。"
+        ]),
+        choices: followChoices()
+      },
+
+      anxiety: {
+        title: "不安やモヤモヤ",
+        heading: "不安やモヤモヤ、どれが近い？",
+        expression: "worry",
+        delta: { relief: 2, warm: 2 },
+        message: msg([
+          "不安って、まだ来てない明日を何回も見に行くみたいで疲れるよねぇ。",
+          "今の感じに近いものを選んでよかよ。"
+        ]),
+        choices: [
+          { label: "先のことが心配", sub: "未来が怖い", next: "anxFuture" },
+          { label: "頭がぐるぐるする", sub: "考えが止まらない", next: "anxLoop" },
+          { label: "落ち着きたい", sub: "今すぐ少し楽になりたい", next: "anxCalm" },
+          { label: "理由を知りたい", sub: "なんでこうなるの？", next: "anxReason" },
+          { label: "アドバイスがほしい", sub: "具体的に知りたい", next: "anxAdvice" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      anxFuture: {
+        title: "先のことが心配",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 7, warm: 5 },
+        message: msg([
+          "未来のことって、見えんぶん怖くなるよね。",
+          "でも、今いっぺんに全部背負わんでよかよ。",
+          "今日は今日の分だけ考えれば十分たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      anxLoop: {
+        title: "頭がぐるぐるする時",
+        heading: "次はどうする？",
+        expression: "worry",
+        delta: { relief: 6, warm: 4 },
+        message: msg([
+          "考えが止まらん時って、心も休めんけんきついよね。",
+          "まず、息を長めに吐いてみよ。",
+          "頭の中だけやなくて、紙に出すと少しだけ外に置けることあるよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      anxCalm: {
+        title: "落ち着きたい時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 9, warm: 6 },
+        message: msg([
+          "大丈夫、今すぐ全部解決せんでもよかよ。",
+          "まずは肩の力を抜いて、息をふぅーっと吐こ。",
+          "温かい飲み物をひとくち飲むだけでも、少し戻ってこれることあるけんね。"
+        ]),
+        choices: followChoices()
+      },
+
+      anxReason: {
+        title: "なんで不安になるの？",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 6, energy: 3 },
+        message: msg([
+          "どうしてかっていうとね、不安って、まだ起きてないことを先回りして守ろうとする心の動きなんよ。",
+          "悪いものっていうより、心が頑張りすぎとるサインでもあるっちゃん。",
+          "まずは責めんでいいとよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      anxAdvice: {
+        title: "不安へのアドバイス",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 6, energy: 5 },
+        message: msg([
+          "おすすめは三つたい。",
+          "一つ目、今起きてること。",
+          "二つ目、まだ起きてない心配。",
+          "三つ目、今できる一歩。",
+          "これを分けると、少し楽になることあるよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      listen: {
+        title: "ただ聞いてほしい",
+        heading: "どう寄り添ってほしい？",
+        expression: "soft",
+        delta: { relief: 5, warm: 5 },
+        message: msg([
+          "うん、今日は聞くほうを大事にしよ。",
+          "アドバイスは脇に置いて、気持ちに合わせるけんね。"
+        ]),
+        choices: [
+          { label: "ただ聞いて", sub: "相づちメイン", next: "listenSoft" },
+          { label: "やさしく慰めて", sub: "しんどい気持ちを包んで", next: "listenComfort" },
+          { label: "褒めてほしい", sub: "頑張ったって言ってほしい", next: "praiseSoft" },
+          { label: "理由を説明して", sub: "なんでそう言うの？", next: "reason" },
+          { label: "博多弁強め", sub: "方言を強めに", next: "hakataStrong" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      listenSoft: {
+        title: "ただ聞くね",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 7, warm: 7 },
+        message: msg([
+          "うん、ちゃんと聞いとうよ。",
+          "今日は答えを急がんでよか。",
+          "順番がぐちゃぐちゃでも、そのまま話してよかけんね。"
+        ]),
+        choices: followChoices()
+      },
+
+      listenComfort: {
+        title: "慰めてほしい時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 8, warm: 8 },
+        message: msg([
+          "そっかそっか……それはきつかったね。",
+          "ここまで、よう頑張ったよ。",
+          "今は無理に元気にならんでもよかけん、少し休も。"
+        ]),
+        choices: followChoices()
+      },
+
+      reason: {
+        title: "理由を説明するね",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 3 },
+        message: msg([
+          "どうしてそう言うかっていうとね、しんどい時に急いで答えを出そうとすると、心がもっと疲れてしまうけんよ。",
+          "まずは、しんどかったねって気持ちを受け止める方が先たい。",
+          "答えを出すのは、そのあとでよかとよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      hakataStrong: {
+        title: "博多弁強め",
+        heading: "次はどうする？",
+        expression: "praise",
+        delta: { relief: 6, warm: 8 },
+        message: msg([
+          "よかよよかよ。",
+          "今日は博多弁つよめでいくけんね。",
+          "うまく話さんでよかばい。",
+          "しんどかったっちゃろ？ここではそのままでよかけん。"
+        ]),
+        choices: followChoices()
+      },
+
+      empty: {
+        title: "何もしたくない",
+        heading: "今のしんどさ、どれが近い？",
+        expression: "worry",
+        delta: { relief: 4, warm: 5 },
+        message: msg([
+          "何もしたくないって思う時は、心も体もかなり疲れとること多いとよ。",
+          "近いものを選んでよかよ。"
+        ]),
+        choices: [
+          { label: "ほんとに何もしたくない", sub: "電池切れ", next: "emptyDead" },
+          { label: "休むのも罪悪感", sub: "休んでいいのかわからない", next: "emptyGuilt" },
+          { label: "ちょっと慰めて", sub: "やさしい言葉がほしい", next: "listenComfort" },
+          { label: "少しだけアドバイス", sub: "今できる小さいこと", next: "emptyAdvice" },
+          { label: "褒めてほしい", sub: "ここまで頑張ったって言ってほしい", next: "praiseSoft" },
+          { label: "最初に戻る", sub: "メニューへ", next: "start" }
+        ]
+      },
+
+      emptyDead: {
+        title: "電池切れ",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 9, warm: 8 },
+        message: msg([
+          "電池が切れとるみたいやね。",
+          "それは甘えやなくて、ちゃんと休みが必要なサインかもしれんよ。",
+          "今日は生きとるだけでも合格たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      emptyGuilt: {
+        title: "休むのが罪悪感な時",
+        heading: "次はどうする？",
+        expression: "soft",
+        delta: { relief: 8, warm: 7 },
+        message: msg([
+          "休むことに罪悪感が出るくらい、いつも頑張っとるんやろうね。",
+          "でも、休むのはサボりやなくて回復たい。",
+          "休まんと、心も体も戻れんけんね。"
+        ]),
+        choices: followChoices()
+      },
+
+      emptyAdvice: {
+        title: "小さな一歩",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 5 },
+        message: msg([
+          "今できる小さいことだけでよかよ。",
+          "水をひとくち飲む。",
+          "顔を洗う。",
+          "横になる。",
+          "それくらいの小ささで十分たい。"
+        ]),
+        choices: followChoices()
+      },
+
+      praiseSoft: {
+        title: "褒めるね",
+        heading: "次はどうする？",
+        expression: "praise",
+        delta: { relief: 7, energy: 6, warm: 8 },
+        message: msg([
+          "もちろん褒めるよ。",
+          "ここまでやってきたの、ほんと偉か。",
+          "しんどい中でここに来て話そうとしただけでも、十分すごかよ。"
+        ]),
+        choices: followChoices()
+      },
+
+      genericAdvice: {
+        title: "少しだけアドバイス",
+        heading: "次はどうする？",
+        expression: "cheer",
+        delta: { relief: 5, energy: 5 },
+        message: msg([
+          "大きく変えようとせんでよかよ。",
+          "今日できる小さい一歩を一個だけ選ぶのがおすすめたい。",
+          "それから、疲れとる時は大きな決断を後回しにしてもよか。",
+          "まず心を休ませるのも立派な前進やけんね。"
+        ]),
+        choices: followChoices()
+      }
+    };
+
+    function clamp(n) {
+      return Math.max(0, Math.min(100, n));
+    }
+
+    function applyMeters(delta) {
+      if (!delta) delta = {};
+      meters.relief = clamp(meters.relief + (delta.relief || 0));
+      meters.energy = clamp(meters.energy + (delta.energy || 0));
+      meters.warm = clamp(meters.warm + (delta.warm || 0));
+      updateMeters();
+    }
+
+    function updateMeters() {
+      reliefValue.textContent = meters.relief;
+      energyValue.textContent = meters.energy;
+      warmValue.textContent = meters.warm;
+      reliefBar.style.width = meters.relief + "%";
+      energyBar.style.width = meters.energy + "%";
+      warmBar.style.width = meters.warm + "%";
+    }
+
+    function setExpression(expr) {
+      motherWrap.className = "mother-wrap expr-" + (expr || "neutral");
+    }
+
+    function showEffect(text) {
+      effectPop.textContent = text || "ぽん♪";
+      effectPop.classList.remove("show");
+      void effectPop.offsetWidth;
+      effectPop.classList.add("show");
+    }
+
+    function typeText(text) {
+      if (typeTimer) clearInterval(typeTimer);
+
+      speechText.textContent = "";
+
+      let i = 0;
+      const speed = 18;
+
+      typeTimer = setInterval(function() {
+        speechText.textContent = text.slice(0, i);
+        i++;
+
+        if (i > text.length) {
+          clearInterval(typeTimer);
+          typeTimer = null;
+        }
+      }, speed);
+    }
+
+    function renderChoices(choices) {
+      choicesGrid.innerHTML = "";
+
+      choices.forEach(function(choice) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn";
+
+        const label = document.createElement("div");
+        label.className = "choice-label";
+        label.textContent = choice.label;
+        btn.appendChild(label);
+
+        if (choice.sub) {
+          const sub = document.createElement("small");
+          sub.className = "choice-sub";
+          sub.textContent = choice.sub;
+          btn.appendChild(sub);
+        }
+
+        btn.addEventListener("click", function() {
+          goScene(choice.next, choice.label);
+        });
+
+        choicesGrid.appendChild(btn);
+      });
+    }
+
+    function log(text) {
+      const line = document.createElement("div");
+      line.textContent = text;
+      logBox.appendChild(line);
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    function goScene(key, selectedLabel) {
+      if (!scenes[key]) return;
+
+      if (selectedLabel) log("あなた： " + selectedLabel);
+
+      historyStack.push(currentScene);
+      currentScene = key;
+
+      const scene = scenes[key];
+
+      sceneTitle.textContent = scene.title || "";
+      choicesHeading.textContent = scene.heading || "どうする？";
+      speakerName.textContent = scene.name || "お母さん";
+
+      setExpression(scene.expression || "neutral");
+      typeText(scene.message || "");
+      renderChoices(scene.choices || followChoices());
+      applyMeters(scene.delta || {});
+
+      log("お母さん： " + String(scene.message || "").replace(/\n/g, " "));
+      showEffect("ぽん♪");
+    }
+
+    function resetAll() {
+      currentScene = "start";
+      historyStack = [];
+      meters = { relief: 35, energy: 28, warm: 40 };
+      logBox.innerHTML = "";
+
+      updateMeters();
+
+      const scene = scenes.start;
+
+      sceneTitle.textContent = scene.title;
+      choicesHeading.textContent = scene.heading;
+      speakerName.textContent = scene.name || "お母さん";
+
+      setExpression(scene.expression);
+      typeText(scene.message);
+      renderChoices(scene.choices);
+
+      log("お母さん： " + scene.message.replace(/\n/g, " "));
+    }
+
+    function goBack() {
+      if (historyStack.length === 0) return;
+
+      const prev = historyStack.pop();
+
+      if (!scenes[prev]) return;
+
+      currentScene = prev;
+
+      const scene = scenes[prev];
+
+      sceneTitle.textContent = scene.title || "";
+      choicesHeading.textContent = scene.heading || "どうする？";
+      speakerName.textContent = scene.name || "お母さん";
+
+      setExpression(scene.expression || "neutral");
+      typeText(scene.message || "");
+      renderChoices(scene.choices || followChoices());
+
+      log("※ ひとつ前の場面に戻りました");
+    }
+
+    function makeFreeReply(text) {
+      const hasGW = text.includes("GW") || text.includes("ゴールデンウィーク") || text.includes("連休");
+      const hasWork = text.includes("仕事") || text.includes("出勤") || text.includes("働") || text.includes("会社");
+
+      if (hasGW && hasWork) {
+        return {
+          expression: "worry",
+          delta: { relief: 8, warm: 8, energy: 3 },
+          message: msg([
+            "うわぁ……それはしんどかね。",
+            "みんなが休みモードなのに、自分だけ仕事って、置いていかれた感じするっちゃんね。",
+            "なんで自分だけって思っても全然おかしくなかよ。",
+            "でも、そんな中でちゃんと働いとるの、ほんと偉かよ。"
+          ])
+        };
+      }
+
+      if (text.includes("どうして") || text.includes("なんで")) {
+        return {
+          expression: "cheer",
+          delta: { relief: 5, energy: 2 },
+          message: msg([
+            "どうしてかっていうとね、しんどい時に急いで答えを出そうとすると、心がもっと疲れてしまうけんよ。",
+            "まずは、しんどかったねって気持ちを受け止める方が先たい。",
+            "答えを出すのは、そのあとでよかとよ。"
+          ])
+        };
+      }
+
+      if (text.includes("疲れ") || text.includes("しんど") || text.includes("きつ")) {
+        return {
+          expression: "soft",
+          delta: { relief: 7, warm: 7 },
+          message: msg([
+            "そっか……疲れたよね。",
+            "ここまでちゃんとやってきたけん、今しんどいんやと思うよ。",
+            "今日は無理して元気にならんでもよかよ。"
+          ])
+        };
+      }
+
+      if (text.includes("不安") || text.includes("心配") || text.includes("怖い")) {
+        return {
+          expression: "worry",
+          delta: { relief: 7, warm: 5 },
+          message: msg([
+            "不安になるくらい、心が頑張りよるんやね。",
+            "まずは深呼吸して、今ここに戻ってこよ。",
+            "全部いっぺんに考えんでよかけんね。"
+          ])
+        };
+      }
+
+      if (text.includes("褒めて") || text.includes("ほめて")) {
+        return {
+          expression: "praise",
+          delta: { relief: 8, energy: 7, warm: 7 },
+          message: msg([
+            "もちろん褒めるよ。",
+            "ここまで来たの、ほんと偉か。",
+            "しんどい中で言葉にできたのも、ちゃんとすごかよ。"
+          ])
+        };
+      }
+
+      if (text.includes("泣きたい") || text.includes("泣きそう")) {
+        return {
+          expression: "soft",
+          delta: { relief: 8, warm: 8 },
+          message: msg([
+            "泣きたいくらい抱えとったんやね。",
+            "泣けるなら泣いてよかよ。",
+            "ここでは我慢せんでよかけんね。"
+          ])
+        };
+      }
+
+      return {
+        expression: "soft",
+        delta: { relief: 5, warm: 5 },
+        message: msg([
+          "うん、ちゃんと聞いとうよ。",
+          "その話、あなたの中でずっと引っかかっとったんやね。",
+          "無理にきれいにまとめんでよかよ。",
+          "話せる分だけで大丈夫たい。"
+        ])
+      };
+    }
+
+    function handleFreeInput() {
+      const text = freeInput.value.trim();
+
+      if (!text) return;
+
+      log("あなた： " + text);
+
+      const reply = makeFreeReply(text);
+
+      setExpression(reply.expression || "soft");
+
+      sceneTitle.textContent = "ひとことへの返事";
+      choicesHeading.textContent = "次はどうする？";
+
+      typeText(reply.message);
+      renderChoices(followChoices());
+      applyMeters(reply.delta || {});
+
+      log("お母さん： " + reply.message.replace(/\n/g, " "));
+
+      freeInput.value = "";
+      showEffect("きゅん♪");
+    }
+
+    sendBtn.addEventListener("click", handleFreeInput);
+
+    freeInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleFreeInput();
+      }
+    });
+
+    resetBtn.addEventListener("click", resetAll);
+    backBtn.addEventListener("click", goBack);
+
+    resetAll();
+  </script>
+</body>
+</html>
